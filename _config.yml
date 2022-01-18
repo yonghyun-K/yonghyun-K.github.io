@@ -1,4 +1,5 @@
 title: Yonghyun Kwon
 theme: jekyll-theme-minimal
+logo: /photo.jpg
 plugins:
   - jemoji
