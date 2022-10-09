@@ -5,10 +5,12 @@ Hi, I am a PhD candidate in the Department of Statistics at Iowa State Universit
 *   B.S. in Statistics (2016 - 2020, Seoul National University)
 
 ## Research
-*   Kim, J.K., Rao, J.N.K., and Kwon, Y. "Analysis of clustered survey data based on two-stage informative sampling and associated two-level models", Journal of the Royal Statistical Society: Series A, accepted for publication.  
+*   Kim, J.K., Rao, J.N.K., and Kwon, Y. "Analysis of clustered survey data based on two-stage informative sampling and associated two-level models", Journal of the Royal Statistical Society: Series A (2022)
+#   In Ho Cho, Jae-Kwang Kim, Yicheng Yang, & Yonghyun Kwon. (2022, September 17). Curing Ultra Large Incomplete Data by Parallel Fractional Hot Deck Imputation. https://doi.org/10.5281/zenodo.7089504
 
 ## Teaching
 *   STAT 521: Theory and Applications of Sample Surveys (Grader, Fall, 2021) 	  
+*   STAT 101: Principles of Statistics (Lab Instructor, Fall, 2022)
 
 ## Contact
 Department of Statistics <br />
