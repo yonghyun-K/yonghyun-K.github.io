@@ -17,7 +17,7 @@ Department of Statistics <br />
 Iowa State University <br />
 Snedecor 1215, 2438 Osborn Drive <br />
 Ames, IA 50011-1090 <br />
-Email: yhkwon@iastate.edu <br />
+Email: yhkwonATiastate.edu <br />
 
 *   Github: [https://github.com/yonghyun-K/](https://github.com/yonghyun-K)
 *   LinkedIn: [https://www.linkedin.com/in/yonghyun-kwon/](https://www.linkedin.com/in/yonghyun-kwon/)
