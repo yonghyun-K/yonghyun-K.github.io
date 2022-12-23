@@ -12,6 +12,13 @@ Hi, I am a PhD candidate in the Department of Statistics at Iowa State Universit
 *   STAT 521: Theory and Applications of Sample Surveys (Grader, Fall, 2021) 	  
 *   STAT 101: Principles of Statistics (Lab Instructor, Fall, 2022)
 
+<!---
+## Talks
+*   Summer school at survey sampling, Ottawa, Canada
+*   JSM 2022, Washington, DC
+*   AGU 2022, Chicago, IL
+-->
+
 ## Contact
 Department of Statistics <br />
 Iowa State University <br />
