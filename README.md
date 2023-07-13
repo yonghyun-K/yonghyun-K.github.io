@@ -5,8 +5,9 @@ Hi, I am a PhD candidate in the Department of Statistics at Iowa State Universit
 *   B.S. in Statistics (2016 - 2020, Seoul National University)
 
 ## Research
+*   Kwon, Y., & Kim, J. (2023). [Ensemble Fractional Imputation for Incomplete Categorical Data with a Graphical Model.](https://dmlr.ai/assets/accepted-papers/135/CameraReady/DMLR_paper.pdf) In Workshop on Data-centric Machine Learning Research, International Conference on Machine Learning (ICML).
+*   Yang, Y., Kwon, Y., Kim, J., & Cho, I. (Accepted). [Ultra Data-Oriented Parallel Fractional Hot-Deck Imputation with Efficient Linearized Variance Estimation.](https://doi.ieeecomputersociety.org/10.1109/TKDE.2023.3249567) IEEE Transactions on Knowledge & Data Engineering, 01(01), 1-14. 
 *   Kim, J.K., Rao, J.N.K. & Kwon, Y. (2022) [Analysis of clustered survey data based on two-stage informative sampling and associated two-level models.](https://doi.org/10.1111/rssa.12805) Journal of the Royal Statistical Society: Series A (Statistics in Society), 185, 1522– 1540.
-*   Y. Yang, Y. Kwon, J. Kim and I. Cho, "[Ultra Data-Oriented Parallel Fractional Hot-Deck Imputation with Efficient Linearized Variance Estimation"](https://doi.ieeecomputersociety.org/10.1109/TKDE.2023.3249567) in IEEE Transactions on Knowledge & Data Engineering, vol. , no. 01, pp. 1-14, 5555.(Accepted)
 
 
 ## Teaching
