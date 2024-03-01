@@ -24,7 +24,7 @@ Hi, I am a Ph.D. candidate in the Department of Statistics at Iowa State Univers
 ## Contact
 Department of Statistics <br />
 Iowa State University <br />
-Snedecor 1215, 2438 Osborn Drive <br />
+Snedecor Hall, 2438 Osborn Drive <br />
 Ames, IA 50011-1090 <br />
 Email: yhkwonATiastateDOTedu <br />
 
