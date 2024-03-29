@@ -1,7 +1,7 @@
 Hi, I am a Ph.D. candidate in the Department of Statistics at Iowa State University. I am broadly interested in survey sampling and missing data analysis. I received a Bachelor of Science in Statistics from Seoul National University in 2020. I have worked as a research assistant in the Center for Survey Statistics and Methodology (CSSM) at Iowa State University since 2020. Outside of work, I enjoy playing [:baseball:](https://en.wikipedia.org/wiki/Baseball) and [:video_game:](https://en.wikipedia.org/wiki/StarCraft:_Brood_War).
 
 ## Education
-*   Ph.D. in Statistics (2020 - Present, Iowa State University)
+*   Ph.D. in Statistics (2020 - 2024, Iowa State University)
 *   B.S. in Statistics (2016 - 2020, Seoul National University)
 
 ## Research
