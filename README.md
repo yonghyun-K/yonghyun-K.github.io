@@ -12,7 +12,6 @@ Hi, I am a Ph.D. candidate in the Department of Statistics at Iowa State Univers
 
 
 ## Teaching
-*   STAT 521: Theory and Applications of Sample Surveys (Grader, Fall, 2021) 	  
 *   STAT 101: Principles of Statistics (Lab Instructor, Fall, 2022)
 
 <!---
