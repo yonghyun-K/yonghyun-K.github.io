@@ -28,6 +28,7 @@ Hi, I am a mathematics instructor at Korea Military Academy located in Seoul, So
 ## Contact
 Department of Mathematics <br />
 Korea Military Academy <br />
+Seoul, South Korea <br />
 Email: yhkwonATkmaDOTacDOTkr <br />
 
 <!---
