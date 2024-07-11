@@ -9,10 +9,10 @@ Hi, I am a mathematics instructor at Korea Military Academy located in Seoul, So
 
 ## Research
 *   **Kwon, Y.**, Kim, J., & Qiu, Y. (2024). [Debiased calibration estimation using generalized entropy in survey sampling.](https://arxiv.org/abs/2404.01076) Submitted.
-*   Kim, J. & **Kwon, Y.** (2024). [Comments on “Exchangeability assumption in propensity‑score based adjustment methods for population mean estimation using non‑probability samples”.](https://www150.statcan.gc.ca/n1/pub/12-001-x/2024001/article/00007-eng.htm?cmp=cwe-cae) *Survey Methodology,* Statistics Canada, Catalogue no. 12-001-X, Vol. 50, No. 1, 57-63.
+*   Kim, J. & **Kwon, Y.** (2024). [Comments on “Exchangeability assumption in propensity‑score based adjustment methods for population mean estimation using non‑probability samples”.](https://www150.statcan.gc.ca/n1/pub/12-001-x/2024001/article/00007-eng.htm?cmp=cwe-cae) *Survey Methodology,* Statistics Canada, 50(1), 57-63.
 *   **Kwon, Y.** & Kim, J. (2023). [Ensemble Fractional Imputation for Incomplete Categorical Data with a Graphical Model.](https://dmlr.ai/assets/accepted-papers/135/CameraReady/DMLR_paper.pdf) *In Workshop on Data-centric Machine Learning Research, International Conference on Machine Learning (ICML).*
-*   Yang, Y., **Kwon, Y.**, Kim, J., & Cho, I. (2023). [Ultra Data-Oriented Parallel Fractional Hot-Deck Imputation With Efficient Linearized Variance Estimation.](https://doi.ieeecomputersociety.org/10.1109/TKDE.2023.3249567) *IEEE Transactions on Knowledge & Data Engineering*, 35(09), 9754–9768.
-*   Kim, J.K., Rao, J.N.K. & **Kwon, Y.** (2022) [Analysis of clustered survey data based on two-stage informative sampling and associated two-level models.](https://doi.org/10.1111/rssa.12805) *Journal of the Royal Statistical Society: Series A (Statistics in Society)*, 185, 1522–1540.
+*   Yang, Y., **Kwon, Y.**, Kim, J., & Cho, I. (2023). [Ultra Data-Oriented Parallel Fractional Hot-Deck Imputation With Efficient Linearized Variance Estimation.](https://doi.ieeecomputersociety.org/10.1109/TKDE.2023.3249567) *IEEE Transactions on Knowledge & Data Engineering*, 35(9), 9754–9768.
+*   Kim, J.K., Rao, J.N.K. & **Kwon, Y.** (2022) [Analysis of clustered survey data based on two-stage informative sampling and associated two-level models.](https://doi.org/10.1111/rssa.12805) *Journal of the Royal Statistical Society: Series A (Statistics in Society)*, 185(4), 1522–1540.
 
 
 ## Teaching
@@ -26,11 +26,17 @@ Hi, I am a mathematics instructor at Korea Military Academy located in Seoul, So
 -->
 
 ## Contact
+Department of Mathematics <br />
+Korea Military Academy <br />
+Email: yhkwonATkmaDOTacDOTkr <br />
+
+<!---
 Department of Statistics <br />
 Iowa State University <br />
 Snedecor Hall, 2438 Osborn Drive <br />
 Ames, IA 50011-1090 <br />
 Email: yhkwonATiastateDOTedu <br />
+-->
 
 *   Github: [https://github.com/yonghyun-K/](https://github.com/yonghyun-K)
 *   LinkedIn: [https://www.linkedin.com/in/yonghyun-kwon/](https://www.linkedin.com/in/yonghyun-kwon/)
