@@ -1,7 +1,7 @@
-Hi, I am a mathematics instructor at Korea Military Academy located in Seoul, South Korea. I am broadly interested in survey sampling and missing data analysis. I received a B.S. in Statistics from Seoul National University in 2020 and PhD in Statistics from Iowa State University in 2024. I was a research assistant at the Center for Survey Statistics and Methodology (CSSM) in Iowa State University from 2020 to 2024. Outside of work, I enjoy playing [:baseball:](https://en.wikipedia.org/wiki/Baseball) and [:video_game:](https://en.wikipedia.org/wiki/StarCraft:_Brood_War).
+Hi, I am an incoming assistant professor at Korea Military Academy located in Seoul, South Korea. I am broadly interested in survey sampling and missing data analysis. I received a B.S. in Statistics from Seoul National University in 2020 and PhD in Statistics from Iowa State University in 2024. I was a research assistant at the Center for Survey Statistics and Methodology (CSSM) in Iowa State University from 2020 to 2024. Outside of work, I enjoy playing [:baseball:](https://en.wikipedia.org/wiki/Baseball) and [:video_game:](https://en.wikipedia.org/wiki/StarCraft:_Brood_War).
 
 ## Employment
-*   Instructor, Department of Mathematics, Korea Military Academy(2024 - 2027, expected)
+*   Assistant Professor, Department of Mathematics, Korea Military Academy(2024 - 2027, expected)
 
 ## Education
 *   Ph.D. in Statistics (2020 - 2024, Iowa State University)
