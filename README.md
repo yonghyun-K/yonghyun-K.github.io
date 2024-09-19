@@ -17,11 +17,11 @@ Hi, I am an incoming assistant professor at Korea Military Academy located in Se
 
 ## Teaching
 ### Lab Instructor at Iowa State University
-*   STAT 101: Principles of Statistics (Lab Instructor, Fall, 2022)
+*   STAT 101: Principles of Statistics (Fall 2022)
 
 ### Instructor at Korea Military Academy
-*   Introduction to Statistics			Fall, 2024
-*   Differential Equations			Fall, 2024
+*   Introduction to Statistics (Fall 2024)
+*   Differential Equations (Fall 2024)
 
 <!---
 ## Talks
