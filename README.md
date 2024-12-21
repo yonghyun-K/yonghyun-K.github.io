@@ -8,7 +8,9 @@ I am an assistant professor at [Korea Military Academy](https://www.kma.ac.kr:46
 *   B.S. in Statistics (2016 - 2020, Seoul National University)
 
 ## Research
+<!---
 *   Kim, J.K., **Kwon, Y.**, Qiu, Y. and Park, J. (2025). Model-assisted calibration estimation  using Generalized entropy calibration in survey sampling, Survey Methodology, accepted for publication.
+-->
 *   **Kwon, Y.**, Kim, J., & Qiu, Y. (2024). [Debiased calibration estimation using generalized entropy in survey sampling.](https://arxiv.org/abs/2404.01076) Submitted.[(R package)](https://CRAN.R-project.org/package=GECal)
 *   Kim, J. & **Kwon, Y.** (2024). [Comments on “Exchangeability assumption in propensity‑score based adjustment methods for population mean estimation using non‑probability samples”.](https://www150.statcan.gc.ca/n1/pub/12-001-x/2024001/article/00007-eng.htm?cmp=cwe-cae) *Survey Methodology*, 50(1), 57-63.
 *   **Kwon, Y.** & Kim, J. (2023). [Ensemble Fractional Imputation for Incomplete Categorical Data with a Graphical Model.](https://dmlr.ai/assets/accepted-papers/135/CameraReady/DMLR_paper.pdf) *In Workshop on Data-centric Machine Learning Research, International Conference on Machine Learning (ICML).*
