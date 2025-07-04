@@ -39,7 +39,8 @@ I am an assistant professor at [Korea Military Academy](https://www.kma.ac.kr:46
 ## Contact
 Department of Mathematics <br />
 Korea Military Academy <br />
-Seoul, South Korea <br />
+574 Hwarang-ro, Nowon-gu <br />
+Seoul, 01805, South Korea <br />
 Email: yhkwonATkmaDOTacDOTkr <br />
 
 <!---
