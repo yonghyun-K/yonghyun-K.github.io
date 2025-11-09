@@ -1,7 +1,7 @@
 I am an assistant professor at [Korea Military Academy](https://www.kma.ac.kr:461/kma/427/subview.do), located in Seoul, South Korea. I am broadly interested in survey sampling and missing data analysis. I received my PhD from [Department of Statistics, Iowa State University](https://www.stat.iastate.edu/) in 2024. My dissertation advisor is Professor [Jae-Kwang Kim](https://sites.google.com/view/jaekwangkim). I was a research assistant at [Center for Survey Statistics and Methodology (CSSM) at Iowa State University](https://www.cssm.iastate.edu/) from 2020 to 2024. Outside of work, I enjoy playing [:baseball:](https://en.wikipedia.org/wiki/Baseball) and [:video_game:](https://en.wikipedia.org/wiki/StarCraft:_Brood_War).
 
 ## Employment
-*   Assistant Professor, Department of Mathematics, Korea Military Academy(2024 - )
+*   Assistant Professor, Department of Mathematics, Korea Military Academy(2024 - 2027, expected)
 
 ## Education
 *   Ph.D. in Statistics (2020 - 2024, Iowa State University)
