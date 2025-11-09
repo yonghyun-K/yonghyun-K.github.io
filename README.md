@@ -11,6 +11,7 @@ I am an assistant professor at [Korea Military Academy](https://www.kma.ac.kr:46
 <!---
 *   Kim, J.K., **Kwon, Y.**, Qiu, Y. and Park, J. (2025). Model-assisted calibration estimation  using Generalized entropy calibration in survey sampling, Survey Methodology, accepted for publication.
 -->
+*   **Kwon, Y.**, Kim, J., & Qiu, Y. (2025+). [A General Approach for Calibration Weighting under Missing at Random.](https://arxiv.org/abs/2511.04496) Submitted.
 *   **Kwon, Y.**, Kim, J., & Qiu, Y. (2025+). [Generalized entropy calibration for analyzing voluntary survey data.](https://arxiv.org/abs/2412.12405) Submitted.
 *   **Kwon, Y.**, Kim, J., & Qiu, Y. (2025+). [Debiased calibration estimation using generalized entropy in survey sampling.](https://doi.org/10.1080/01621459.2025.2537452) *Journal of the American Statistical Association*, accepted for publication.[(R package)](https://CRAN.R-project.org/package=GECal)
 *   Kim, J.K., **Kwon, Y.**, Qiu, Y. and Park, J.  (2025). [Model-assisted calibration estimation  using Generalized entropy calibration in survey sampling](https://www150.statcan.gc.ca/n1/pub/12-001-x/2025001/article/00007-eng.htm), *Survey Methodology*, 51(1), 197-215. 
