@@ -32,7 +32,7 @@ I am an assistant professor at [Korea Military Academy](https://www.kma.ac.kr:46
 *   Operational Analysis using Artificial Intelligence (Winter 2026) <br />
     [LaTex Part 1: the Basics](AILecture/part1.pdf) <br />
     [LaTex Part 2: Structured Documents](AILecture/part2.pdf) <br />
-    [Project example 2 : Simple Linear Regression](AILecture/linreg_gemini.pdf) <br />
+    [Project example 1 : Simple Linear Regression](AILecture/linreg_gemini.pdf) <br />
     [Project example 2 : Temperature analysis](AILecture/weather_gemini.pdf)
     
 <!---
