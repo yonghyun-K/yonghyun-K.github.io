@@ -29,7 +29,8 @@ I am an assistant professor at [Korea Military Academy](https://www.kma.ac.kr:46
 *   Statistical Methods (Fall 2025)
 *   Introduction to Statistics (Fall 2024, Spring & Fall 2025)
 *   Differential Equations (Fall 2024, Spring 2025)
-
+*   Operational Analysis using Artificial Intelligence (Winter 2026)
+    
 <!---
 ## Talks
 *   Summer school at survey sampling, Ottawa, Canada
