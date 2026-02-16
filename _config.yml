@@ -1,30 +1,16 @@
 title: Yonghyun Kwon
-tagline: Assistant Professor in Statistics
-description: Personal website of Yonghyun Kwon
-url: "https://yonghyun-k.github.io"
-baseurl: ""
-lang: en
+theme: jekyll-theme-minimal
+logo: /photo.jpg
+plugins:
+  - jemoji
 
-markdown: kramdown
-permalink: pretty
+################
+# --- Logo --- #
+################
 
-# Optional: keep GitHub Pages builds fast/simple
-exclude:
-  - README.md
-  - LICENSE
-  - Gemfile
-  - Gemfile.lock
-  - node_modules
-  - vendor
+# Image to show in the navigation bar - works best with a square image
+# Remove this parameter if you don't want an image in the navbar
+avatar: "/photo.png"
 
-author:
-  name: Yonghyun Kwon
-  role: Assistant Professor in Statistics
-  affiliation: Korea Military Academy
-  photo: /photo.jpg
-  email_obfuscated: yhkwonATkmaDOTacDOTkr
-  github: "https://github.com/yonghyun-K/"
-  linkedin: "https://www.linkedin.com/in/yonghyun-kwon/"
-
-# You can add a CV PDF later and set this path:
-# cv: "/assets/cv.pdf"
+# By default, the image is cut into a circle. You can disable this behaviour by setting 'round-avatar: false'
+round-avatar: true
