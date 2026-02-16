@@ -29,13 +29,6 @@ I am an assistant professor at [Korea Military Academy](https://www.kma.ac.kr:46
 *   Statistical Methods (Fall 2025)
 *   Introduction to Statistics (Fall 2024, Spring & Fall 2025)
 *   Differential Equations (Fall 2024, Spring 2025)
-*   Operational Research using Artificial Intelligence (Winter 2026) <br />
-    [LaTex Part 1: the Basics](AILecture/part1.pdf) <br />
-    [LaTex Part 2: Structured Documents](AILecture/part2.pdf) <br />
-    [LaTex Part 3: Presentations](AILecture/part3.pdf) <br />    
-    [Project example 1 : Simple Linear Regression](AILecture/linreg_gemini.pdf) ([Tex file](https://github.com/yonghyun-K/latex-course/blob/master/projects/linreg_gemini.tex)) <br />
-    [Project example 2 : Temperature analysis](AILecture/weather_gemini.pdf) ([Tex file](https://github.com/yonghyun-K/latex-course/blob/master/projects/weather_gemini.tex))
-
 <!---
 ## Talks
 *   Summer school at survey sampling, Ottawa, Canada
