@@ -17,8 +17,7 @@ Outside of work, I enjoy playing ⚾.
 
 - PhD in Statistics, Iowa State University (2024)  
   Advisor: Professor Jae-Kwang Kim
-- MS in Statistics, Korea University (2018)
-- BS in Statistics, Korea University (2016)
+- BS in Statistics, Seoul National University (2020)
 
 <a id="contact"></a>
 
