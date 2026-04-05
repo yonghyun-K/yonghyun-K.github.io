@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statistical Methods — KMA Spring 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a2e44; --accent: #2e6da4; --accent-dark: #1f4f7a;
+      --text: #333; --text-light: #666; --bg: #fff; --bg-light: #f8f9fa;
+      --border: #e0e0e0; --gold: #c9a227; --gold-light: #fdf6e3;
+      --green: #27ae60; --red: #c0392b; --purple: #7d3c98;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; font-size: 15px; }
+    a { color: var(--accent); text-decoration: none; transition: color .2s; }
+    a:hover { color: var(--accent-dark); text-decoration: underline; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #1a2e44 0%, #243b55 60%, #2c4a6b 100%);
+      color: #fff; padding: 52px 0 44px; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(135deg, transparent, transparent 30px, rgba(255,255,255,.018) 30px, rgba(255,255,255,.018) 31px);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: 'STAT'; position: absolute; right: -20px; bottom: -30px;
+      font-family: 'EB Garamond', serif; font-size: 160px; font-weight: 600;
+      color: rgba(255,255,255,.04); line-height: 1; pointer-events: none; user-select: none;
+    }
+    .hero-inner { max-width: 960px; margin: 0 auto; padding: 0 32px; position: relative; }
+    .hero-tag {
+      display: inline-block; font-size: 11.5px; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--gold); border: 1px solid var(--gold);
+      border-radius: 4px; padding: 3px 10px; margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: clamp(28px, 4vw, 46px); font-weight: 600; line-height: 1.2; margin-bottom: 8px;
+    }
+    .hero-sub { font-size: 15px; color: rgba(255,255,255,.65); font-style: italic; font-family: 'EB Garamond', serif; margin-bottom: 4px; }
+    .hero-meta { font-size: 13.5px; color: rgba(255,255,255,.72); display: flex; flex-wrap: wrap; gap: 18px; margin-top: 16px; }
+    .hero-meta span { display: flex; align-items: center; gap: 6px; }
+    .hero-meta svg { opacity: .65; flex-shrink: 0; }
+
+    /* STICKY NAV */
+    .course-nav { background: #fff; border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+    .course-nav-inner { max-width: 960px; margin: 0 auto; padding: 0 32px; display: flex; overflow-x: auto; scrollbar-width: none; }
+    .course-nav-inner::-webkit-scrollbar { display: none; }
+    .course-nav a { display: block; padding: 13px 15px; font-size: 13.5px; font-weight: 600; color: var(--text-light); white-space: nowrap; border-bottom: 3px solid transparent; transition: color .2s, border-color .2s; text-decoration: none; }
+    .course-nav a:hover { color: var(--primary); border-color: var(--accent); }
+    .course-nav a.active { color: var(--primary); border-color: var(--accent); }
+
+    /* LAYOUT */
+    .page-body { max-width: 960px; margin: 0 auto; padding: 0 32px 80px; display: grid; grid-template-columns: 1fr 290px; gap: 48px; align-items: start; }
+    .main-col { padding-top: 44px; }
+    .side-col  { padding-top: 44px; }
+
+    /* SECTIONS */
+    .section { margin-bottom: 52px; }
+    .section-title { font-family: 'EB Garamond', Georgia, serif; font-size: 23px; font-weight: 600; color: var(--primary); padding-bottom: 9px; border-bottom: 2px solid var(--border); margin-bottom: 20px; display: flex; align-items: center; gap: 9px; }
+    .section-title svg { color: var(--accent); flex-shrink: 0; }
+
+    /* SCHEDULE TABLE */
+    .schedule-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    .schedule-table th { background: var(--primary); color: #fff; padding: 9px 13px; text-align: left; font-size: 11.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+    .schedule-table td { padding: 8px 13px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .schedule-table tr:last-child td { border-bottom: none; }
+    .schedule-table tr:hover td { background: var(--bg-light); }
+    .schedule-table tr.holiday td { background: #f0f4f8; color: var(--text-light); font-style: italic; }
+    .schedule-table tr.no-class td { background: #f5f5f5; color: var(--text-light); font-style: italic; }
+    .wk { font-weight: 700; color: var(--accent); width: 34px; text-align: center; }
+    .date-col { color: var(--text-light); width: 108px; white-space: nowrap; font-size: 13px; }
+    .topic-main { font-weight: 500; color: var(--primary); }
+    .topic-sub  { font-size: 12.5px; color: var(--text-light); }
+    .badge { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 1px 7px; border-radius: 4px; vertical-align: middle; white-space: nowrap; }
+    .badge-exam    { background: #fde8e8; color: var(--red); }
+    .badge-quiz    { background: #fef5e7; color: #d68910; }
+    .badge-holiday { background: #e8f0fd; color: #2471a3; }
+    .badge-project { background: #f0e8fd; color: var(--purple); }
+
+    /* FILES TABLE */
+    .files-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    .files-table th { background: var(--bg-light); color: var(--primary); padding: 8px 13px; text-align: left; font-size: 11.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; border-bottom: 2px solid var(--border); }
+    .files-table td { padding: 8px 13px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .files-table tr:last-child td { border-bottom: none; }
+    .files-table tr:hover td { background: var(--bg-light); }
+    .item-name { font-weight: 600; color: var(--primary); }
+    .item-sub  { font-size: 12px; color: var(--text-light); }
+    .btn-file { display: inline-block; font-size: 12px; padding: 2px 10px; border: 1.5px solid var(--accent); border-radius: 4px; color: var(--accent); font-weight: 600; transition: all .2s; text-decoration: none; white-space: nowrap; }
+    .btn-file:hover { background: var(--accent); color: #fff; text-decoration: none; }
+    .btn-file + .btn-file { margin-left: 4px; }
+    .btn-file.sol { border-color: var(--green); color: var(--green); }
+    .btn-file.sol:hover { background: var(--green); color: #fff; }
+    .btn-file.proj { border-color: var(--purple); color: var(--purple); }
+    .btn-file.proj:hover { background: var(--purple); color: #fff; }
+    .btn-file.data { border-color: #c0392b; color: #c0392b; }
+    .btn-file.data:hover { background: #c0392b; color: #fff; }
+
+    /* SIDEBAR */
+    .info-card { background: var(--bg-light); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+    .info-card h3 { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-light); margin-bottom: 13px; }
+    .info-row { display: flex; gap: 9px; margin-bottom: 9px; font-size: 13.5px; align-items: flex-start; }
+    .info-row:last-child { margin-bottom: 0; }
+    .info-row svg { flex-shrink: 0; margin-top: 3px; color: var(--accent); }
+    .info-label { font-weight: 600; color: var(--primary); min-width: 68px; display: block; }
+    .instructor-card { display: flex; align-items: center; gap: 14px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 20px; }
+    .instructor-avatar { width: 54px; height: 54px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border); flex-shrink: 0; }
+    .instructor-info .name  { font-weight: 700; color: var(--primary); font-size: 14.5px; }
+    .instructor-info .role  { font-size: 12px; color: var(--text-light); margin-top: 1px; }
+    .instructor-info .email { font-size: 13px; margin-top: 5px; }
+    .grading-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13.5px; border-bottom: 1px solid var(--border); align-items: baseline; }
+    .grading-row:last-child { border-bottom: none; }
+    .grading-bar { height: 3px; background: var(--border); border-radius: 2px; margin-top: 3px; overflow: hidden; }
+    .grading-bar-fill { height: 100%; background: var(--accent); border-radius: 2px; }
+    .resource-list { list-style: none; }
+    .resource-list li { padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13.5px; }
+    .resource-list li:last-child { border-bottom: none; }
+
+    /* ALERT BOX */
+    .alert { background: #fef9ec; border-left: 4px solid var(--gold); border-radius: 4px; padding: 12px 16px; font-size: 13.5px; color: #7d5a00; margin-bottom: 20px; }
+
+    /* FOOTER */
+    .course-footer { background: var(--primary); color: rgba(255,255,255,.6); text-align: center; padding: 20px 32px; font-size: 13px; }
+    .course-footer a { color: rgba(255,255,255,.8); }
+    .course-footer a:hover { color: #fff; }
+
+    /* RESPONSIVE */
+    @media (max-width: 740px) {
+      .page-body { grid-template-columns: 1fr; gap: 0; padding: 0 18px 60px; }
+      .side-col { padding-top: 0; }
+      .hero-inner, .course-nav-inner { padding: 0 18px; }
+      .date-col { display: none; }
+      .hero::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <h1>Statistical Methods</h1>
+    <div class="hero-meta">
+      <span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Spring 2026
+      </span>
+      <span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Mon &amp; Wed, 75 min
+      </span>
+      <span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        Chungmu Hall Rm. 327
+      </span>
+      <span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        ISLR, 2nd ed.
+      </span>
+      <span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+        3 credits &middot; Section A1
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="course-nav">
+  <div class="course-nav-inner">
+    <a href="#overview" class="active">Overview</a>
+    <a href="#schedule">Schedule</a>
+    <a href="#notes">Lecture Notes</a>
+    <a href="#exams">Quiz &amp; Exam</a>
+    <a href="#hw">Homework</a>
+    <a href="#project">Final Project</a>
+    <a href="#resources">Resources</a>
+  </div>
+</nav>
+
+<div class="page-body">
+  <div class="main-col">
+
+    <!-- OVERVIEW -->
+    <div class="section" id="overview">
+      <div class="section-title">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Course Overview
+      </div>
+      <p>This course introduces the fundamental techniques and theory underlying modern regression analysis and statistical machine learning. Through a combination of lectures, R practice sessions, and a final project, students gain both conceptual understanding and hands-on experience in analyzing real data.</p>
+
+      <h3 style="margin:22px 0 10px; font-size:14.5px; font-weight:700; color:var(--primary);">Learning Objectives</h3>
+      <ul style="padding-left:20px; line-height:2.1; font-size:14.5px;">
+        <li>Understand the theoretical foundations of regression and classification models.</li>
+        <li>Apply penalized regression, tree-based methods, neural networks, and unsupervised learning techniques.</li>
+        <li>Develop practical data analysis skills using the R statistical programming language.</li>
+      </ul>
+
+      <h3 style="margin:22px 0 10px; font-size:14.5px; font-weight:700; color:var(--primary);">Topics Covered</h3>
+      <p style="font-size:14px; line-height:2.0;">
+        <strong>Regression Analysis</strong> &mdash; Ch. 3 Linear Regression &nbsp;&middot;&nbsp; Ch. 4 Classification &nbsp;&middot;&nbsp; Ch. 5 Resampling Methods &nbsp;&middot;&nbsp; Ch. 6 Penalized Regression &nbsp;&middot;&nbsp; Ch. 7 Regression Splines<br>
+        <strong>Machine Learning</strong> &mdash; Ch. 8 Tree-Based Methods &nbsp;&middot;&nbsp; Ch. 10 Deep Learning &nbsp;&middot;&nbsp; Ch. 12 Unsupervised Learning
+      </p>
+
+      <h3 style="margin:22px 0 10px; font-size:14.5px; font-weight:700; color:var(--primary);">Teaching Method</h3>
+      <p style="font-size:14px;">Approximately 50% lectures and discussions, 50% presentations and R practice. Theoretical concepts are taught through PPT slides; real data analysis skills are acquired through hands-on R exercises.</p>
+
+      <h3 style="margin:22px 0 10px; font-size:14.5px; font-weight:700; color:var(--primary);">Textbook</h3>
+      <p style="font-size:14px;">James, Witten, Hastie &amp; Tibshirani, <em>An Introduction to Statistical Learning</em>, 2nd ed. (Springer, 2021) &mdash; <a href="https://www.statlearning.com/" target="_blank">free PDF</a></p>
+
+      <h3 style="margin:22px 0 10px; font-size:14.5px; font-weight:700; color:var(--primary);">Prerequisites</h3>
+      <p style="font-size:14px;">Introduction to Statistics, Mathematical Statistics. Working knowledge of calculus and linear algebra.</p>
+    </div>
+
+    <!-- SCHEDULE -->
+    <div class="section" id="schedule">
+      <div class="section-title">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Course Schedule
+      </div>
+      <p style="font-size:13px; color:var(--text-light); margin-bottom:16px;">All sessions are 75 minutes. Closed-book quizzes are written exams without notes. Open-book quizzes allow notes but no internet access.</p>
+
+      <table class="schedule-table">
+        <thead>
+          <tr><th class="wk">Wk</th><th class="date-col">Date</th><th>Topic</th><th style="width:145px;"></th></tr>
+        </thead>
+        <tbody>
+
+          <!-- Week 1 -->
+          <tr class="holiday">
+            <td class="wk">1</td>
+            <td class="date-col">Mar 2 (Mon)</td>
+            <td><div class="topic-main">Public Holiday</div><div class="topic-sub">Independence Movement Day (substitute)</div></td>
+            <td><span class="badge badge-holiday">No Class</span></td>
+          </tr>
+          <tr>
+            <td class="wk">1</td>
+            <td class="date-col">Mar 4 (Wed)</td>
+            <td><div class="topic-main">Ch. 3 — Introduction &amp; Simple Linear Regression (I)</div><div class="topic-sub">3.1: Estimating coefficients, assessing accuracy</div></td>
+            <td></td>
+          </tr>
+
+          <!-- Week 2 -->
+          <tr>
+            <td class="wk">2</td>
+            <td class="date-col">Mar 9 (Mon)</td>
+            <td><div class="topic-main">Ch. 3 — Simple Linear Regression (II)</div><div class="topic-sub">3.1 (cont.): Confidence intervals, hypothesis tests</div></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="wk">2</td>
+            <td class="date-col">Mar 11 (Wed)</td>
+            <td><div class="topic-main">Ch. 3 — Multiple Linear Regression (I)</div><div class="topic-sub">3.2: Estimating coefficients, model fit</div></td>
+            <td></td>
+          </tr>
+
+          <!-- Week 3 -->
+          <tr>
+            <td class="wk">3</td>
+            <td class="date-col">Mar 16 (Mon)</td>
+            <td><div class="topic-main">Ch. 3 — Multiple Linear Regression (II)</div><div class="topic-sub">3.2 (cont.): Variable selection, predictions</div></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="wk">3</td>
+            <td class="date-col">Mar 18 (Wed)</td>
+            <td><div class="topic-main">Ch. 3 — Other Considerations</div><div class="topic-sub">3.3: Qualitative predictors, interactions, non-linearity</div></td>
+            <td></td>
+          </tr>
+
+          <!-- Week 4 -->
+          <tr>
+            <td class="wk">4</td>
+            <td class="date-col">Mar 23 (Mon)</td>
+            <td><div class="topic-main">Quiz 1</div><div class="topic-sub">Coverage: Ch. 3 Linear Regression</div></td>
+            <td><span class="badge badge-quiz">Quiz 1 · Closed book</span></td>
+          </tr>
+          <tr>
+            <td class="wk">4</td>
+            <td class="date-col">Mar 25 (Wed)</td>
+            <td><div class="topic-main">Ch. 4 — Logistic Regression (I)</div><div class="topic-sub">4.3: Logistic model, MLE, multiple logistic regression &nbsp;·&nbsp; <em>Make-up class Mar 27</em></div></td>
+            <td></td>
+          </tr>
+
+          <!-- Week 5 -->
+          <tr>
+            <td class="wk">5</td>
+            <td class="date-col">Mar 30 (Mon)</td>
+            <td><div class="topic-main">Ch. 4 — Logistic Regression (II)</div><div class="topic-sub">4.3 (cont.): Multinomial logistic regression</div></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="wk">5</td>
+            <td class="date-col">Apr 1 (Wed)</td>
+            <td><div class="topic-main">Ch. 4 — Generative Models for Classification</div><div class="topic-sub">4.4: LDA, QDA, Naive Bayes</div></td>
+            <td></td>
+          </tr>
+
+          <!-- Week 6 -->
+          <tr>
+            <td class="wk">6</td>
+            <td class="date-col">Apr 6 (Mon)</td>
+            <td><div class="topic-main">Quiz 2</div><div class="topic-sub">Coverage: Ch. 4 Classification</div></td>
+            <td><span class="badge badge-quiz">Quiz 2 · Closed book</span></td>
+          </tr>
+          <tr>
+            <td class="wk">6</td>
+            <td class="date-col">Apr 8 (Wed)</td>
+            <td><div class="topic-main">Ch. 5 — Resampling Methods</div><div class="topic-sub">5.1: Cross-Validation &nbsp;·&nbsp; 5.2: The Bootstrap</div></td>
+            <td></td>
+          </tr>
+
+          <!-- Week 7 -->
+          <tr>
+            <td class="wk">7</td>
+            <td class="date-col">Apr 13 (Mon)</td>
+            <td><div class="topic-main">Ch. 6 — Shrinkage Methods</div><div class="topic-sub">6.2: Ridge regression, Lasso</div></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="wk">7</td>
+            <td class="date-col">Apr 15 (Wed)</td>
+            <td><div class="topic-main">Ch. 7 — Regression Splines</div><div class="topic-sub">7.4: Piecewise polynomials, spline basis, natural splines</div></td>
+            <td></td>
+          </tr>
+
+          <!-- Week 8 -->
+          <tr>
+            <td class="wk">8</td>
+            <td class="date-col">Apr 20 (Mon)</td>
+            <td><div class="topic-main">Midterm Exam</div><div class="topic-sub">Coverage: Ch. 3–7</div></td>
+            <td><span class="badge badge-exam">Midterm · Closed book</span></td>
+          </tr>
+          <tr>
+            <td class="wk">8</td>
+            <td class="date-col">Apr 22 (Wed)</td>
+            <td><div class="topic-main">Midterm Exam</div><div class="topic-sub">Coverage: Ch. 3–7</div></td>
+            <td><span class="badge badge-exam">Midterm · Closed book</span></td>
+          </tr>
+
+          <!-- Week 9 -->
+          <tr>
+            <td class="wk">9</td>
+            <td class="date-col">Apr 27 (Mon)</td>
+            <td><div class="topic-main">Ch. 8 — Decision Trees</div><div class="topic-sub">8.1: Regression trees, classification trees, pruning</div></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="wk">9</td>
+            <td class="date-col">Apr 29 (Wed)</td>
+            <td><div class="topic-main">Ch. 8 — Ensemble Methods</div><div class="topic-sub">8.2: Bagging, Random Forests, Boosting, BART</div></td>
+            <td></td>
+          </tr>
+
+          <!-- Week 10 -->
+          <tr>
+            <td class="wk">10</td>
+            <td class="date-col">May 4 (Mon)</td>
+            <td><div class="topic-main">Quiz 3</div><div class="topic-sub">Coverage: Ch. 8 Tree-Based Methods</div></td>
+            <td><span class="badge badge-quiz">Quiz 3 · Open book</span></td>
+          </tr>
+          <tr class="holiday">
+            <td class="wk">10</td>
+            <td class="date-col">May 6 (Wed)</td>
+            <td><div class="topic-main">Cadet Day</div></td>
+            <td><span class="badge badge-holiday">No Class</span></td>
+          </tr>
+
+          <!-- Week 11 -->
+          <tr class="no-class">
+            <td class="wk">11</td>
+            <td class="date-col">May 11 (Mon)</td>
+            <td><div class="topic-main">Admissions Outreach</div><div class="topic-sub">Make-up class held Apr 10</div></td>
+            <td><span class="badge badge-holiday">No Class</span></td>
+          </tr>
+          <tr class="no-class">
+            <td class="wk">11</td>
+            <td class="date-col">May 13 (Wed)</td>
+            <td><div class="topic-main">Admissions Outreach</div></td>
+            <td><span class="badge badge-holiday">No Class</span></td>
+          </tr>
+
+          <!-- Week 12 -->
+          <tr>
+            <td class="wk">12</td>
+            <td class="date-col">May 18 (Mon)</td>
+            <td><div class="topic-main">Ch. 10 — Multilayer Neural Networks</div><div class="topic-sub">10.2: Single &amp; multi-layer perceptrons, activation functions</div></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="wk">12</td>
+            <td class="date-col">May 20 (Wed)</td>
+            <td><div class="topic-main">Ch. 10 — CNNs, RNNs &amp; Fitting</div><div class="topic-sub">10.3: Convolutional NNs &nbsp;·&nbsp; 10.5: Recurrent NNs &nbsp;·&nbsp; 10.7: Training &nbsp;·&nbsp; <em>Make-up May 22</em></div></td>
+            <td></td>
+          </tr>
+
+          <!-- Week 13 -->
+          <tr class="holiday">
+            <td class="wk">13</td>
+            <td class="date-col">May 25 (Mon)</td>
+            <td><div class="topic-main">Public Holiday</div><div class="topic-sub">Buddha's Birthday (substitute) &nbsp;·&nbsp; Make-up class held May 22</div></td>
+            <td><span class="badge badge-holiday">No Class</span></td>
+          </tr>
+          <tr>
+            <td class="wk">13</td>
+            <td class="date-col">May 27 (Wed)</td>
+            <td><div class="topic-main">Quiz 4</div><div class="topic-sub">Coverage: Ch. 10 Deep Learning</div></td>
+            <td><span class="badge badge-quiz">Quiz 4 · Open book</span></td>
+          </tr>
+
+          <!-- Week 14 -->
+          <tr>
+            <td class="wk">14</td>
+            <td class="date-col">Jun 1 (Mon)</td>
+            <td><div class="topic-main">Ch. 12 — PCA &amp; Matrix Completion</div><div class="topic-sub">12.2: Principal components &nbsp;·&nbsp; 12.3: Missing values</div></td>
+            <td></td>
+          </tr>
+          <tr class="holiday">
+            <td class="wk">14</td>
+            <td class="date-col">Jun 3 (Wed)</td>
+            <td><div class="topic-main">Local Elections</div><div class="topic-sub">Make-up class held Jun 12</div></td>
+            <td><span class="badge badge-holiday">No Class</span></td>
+          </tr>
+
+          <!-- Week 15 -->
+          <tr>
+            <td class="wk">15</td>
+            <td class="date-col">Jun 8 (Mon)</td>
+            <td><div class="topic-main">Ch. 12 — Clustering Methods</div><div class="topic-sub">12.4: K-means clustering, hierarchical clustering</div></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="wk">15</td>
+            <td class="date-col">Jun 10 (Wed)</td>
+            <td><div class="topic-main">Final Project Presentations</div><div class="topic-sub">Make-up class held Jun 12</div></td>
+            <td><span class="badge badge-project">Project</span></td>
+          </tr>
+
+          <!-- Week 16 -->
+          <tr>
+            <td class="wk">16</td>
+            <td class="date-col">Jun 15 (Mon)</td>
+            <td><div class="topic-main">Final Exam</div><div class="topic-sub">Coverage: Ch. 8, 10, 12 (+ comprehensive)</div></td>
+            <td><span class="badge badge-exam">Final · Open book</span></td>
+          </tr>
+          <tr>
+            <td class="wk">16</td>
+            <td class="date-col">Jun 17 (Wed)</td>
+            <td><div class="topic-main">Final Exam</div><div class="topic-sub">Coverage: Ch. 8, 10, 12 (+ comprehensive)</div></td>
+            <td><span class="badge badge-exam">Final · Open book</span></td>
+          </tr>
+
+          <!-- Week 17 -->
+          <tr class="no-class">
+            <td class="wk">17</td>
+            <td class="date-col">Jun 22 (Mon)</td>
+            <td><div class="topic-main">National Trail March</div></td>
+            <td><span class="badge badge-holiday">No Class</span></td>
+          </tr>
+          <tr class="no-class">
+            <td class="wk">17</td>
+            <td class="date-col">Jun 24 (Wed)</td>
+            <td><div class="topic-main">National Trail March</div></td>
+            <td><span class="badge badge-holiday">No Class</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div><!-- /#schedule -->
+
+    <!-- LECTURE NOTES -->
+    <div class="section" id="notes">
+      <div class="section-title">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Lecture Notes
+      </div>
+      <table class="files-table">
+        <thead><tr><th>Chapter</th><th style="width:120px;">Files</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="item-name">Ch. 3 — Linear Regression</div></td>
+            <td><a href="files/Chapter 3 Linear regression.pdf" class="btn-file">Slides</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Ch. 4 — Classification</div></td>
+            <td><a href="files/Chapter 4 Classification.pdf" class="btn-file">Slides</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Ch. 5 — Resampling Methods</div></td>
+            <td><a href="files/Chapter 5 Resampling methods.pdf" class="btn-file">Slides</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Ch. 6 — Linear Model Selection and Regularization</div></td>
+            <td><a href="files/Chapter 6 Linear model selection and regularization.pdf" class="btn-file">Slides</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Ch. 7 — Moving Beyond Linearity</div></td>
+            <td><a href="files/Chapter 7 Moving beyond linearity.pdf" class="btn-file">Slides</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Ch. 8 — Tree-Based Methods</div></td>
+            <td><a href="files/Chapter 8 Tree-based methods.pdf" class="btn-file">Slides</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Ch. 10 — Deep Learning</div></td>
+            <td><a href="files/Chapter 10 Deep learning.pdf" class="btn-file">Slides</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Ch. 12 — Unsupervised Learning</div></td>
+            <td><a href="files/Chapter 12 Unsupervised learning.pdf" class="btn-file">Slides</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div><!-- /#notes -->
+
+    <!-- QUIZ & EXAM -->
+    <div class="section" id="exams">
+      <div class="section-title">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Quiz &amp; Exam
+      </div>
+
+      <p style="font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--text-light); margin-bottom:12px;">2026 Spring</p>
+      <table class="files-table">
+        <thead><tr><th>Item</th><th>Date</th><th>Format</th><th style="width:210px;">Files</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="item-name">Quiz 1</div><div class="item-sub">Ch. 3 — Linear Regression</div></td>
+            <td style="font-size:13px;color:var(--text-light);">Mar 23</td>
+            <td style="font-size:13px;color:var(--text-light);">Closed book</td>
+            <td><a href="files/26-1/quiz1.pdf" class="btn-file">Problem</a><a href="files/26-1/quiz1_sol.pdf" class="btn-file sol">Solution</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Quiz 2</div><div class="item-sub">Ch. 4 — Classification</div></td>
+            <td style="font-size:13px;color:var(--text-light);">Apr 6</td>
+            <td style="font-size:13px;color:var(--text-light);">Closed book</td>
+            <td><a href="files/26-1/quiz2.pdf" class="btn-file">Problem</a><a href="files/26-1/quiz2_sol.pdf" class="btn-file sol">Solution</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Midterm Exam</div><div class="item-sub">Ch. 3–7</div></td>
+            <td style="font-size:13px;color:var(--text-light);">Apr 20–22</td>
+            <td style="font-size:13px;color:var(--text-light);">Closed book</td>
+            <td><a href="files/26-1/Midterm.pdf" class="btn-file">Problem</a><a href="files/26-1/Midterm_sol.pdf" class="btn-file sol">Solution</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Quiz 3</div><div class="item-sub">Ch. 8 — Tree-Based Methods</div></td>
+            <td style="font-size:13px;color:var(--text-light);">May 4</td>
+            <td style="font-size:13px;color:var(--text-light);">Open book, closed web</td>
+            <td><a href="files/26-1/quiz3.pdf" class="btn-file">Problem</a><a href="files/26-1/quiz3_sol.pdf" class="btn-file sol">Solution</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Quiz 4</div><div class="item-sub">Ch. 10 — Deep Learning</div></td>
+            <td style="font-size:13px;color:var(--text-light);">May 27</td>
+            <td style="font-size:13px;color:var(--text-light);">Open book, closed web</td>
+            <td><a href="files/26-1/quiz4.pdf" class="btn-file">Problem</a><a href="files/26-1/quiz4_sol.pdf" class="btn-file sol">Solution</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Final Exam</div><div class="item-sub">Ch. 8, 10, 12 (comprehensive)</div></td>
+            <td style="font-size:13px;color:var(--text-light);">Jun 15–17</td>
+            <td style="font-size:13px;color:var(--text-light);">Open book, closed web</td>
+            <td><a href="files/26-1/Final.pdf" class="btn-file">Problem</a><a href="files/26-1/Final_sol.pdf" class="btn-file sol">Solution</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--text-light); margin: 28px 0 12px;">Past Exams — 2025 Fall</p>
+      <table class="files-table">
+        <thead><tr><th>Item</th><th style="width:210px;">Files</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="item-name">Quiz 1</div></td>
+            <td><a href="files/25-2/quiz1.pdf" class="btn-file">Problem</a><a href="files/25-2/quiz1_sol.pdf" class="btn-file sol">Solution</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Quiz 2</div></td>
+            <td><a href="files/25-2/quiz2.pdf" class="btn-file">Problem</a><a href="files/25-2/quiz2_sol.pdf" class="btn-file sol">Solution</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Midterm Exam</div></td>
+            <td><a href="files/25-2/Midterm.pdf" class="btn-file">Problem</a><a href="files/25-2/Midterm_sol.pdf" class="btn-file sol">Solution</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Quiz 3</div></td>
+            <td><a href="files/25-2/quiz3.pdf" class="btn-file">Problem</a><a href="files/25-2/quiz3_sol.pdf" class="btn-file sol">Solution</a><a href="files/25-2/Movie.csv" class="btn-file data">Movie.csv</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Quiz 4</div></td>
+            <td><a href="files/25-2/quiz4.pdf" class="btn-file">Problem</a><a href="files/25-2/quiz4_sol.pdf" class="btn-file sol">Solution</a><a href="files/25-2/customer.csv" class="btn-file data">customer.csv</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">Final Exam</div></td>
+            <td><a href="files/25-2/Final.pdf" class="btn-file">Problem</a><a href="files/25-2/Final_sol.pdf" class="btn-file sol">Solution</a><a href="files/25-2/Fantasy.csv" class="btn-file data">Fantasy.csv</a><a href="files/25-2/travel.csv" class="btn-file data">travel.csv</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div><!-- /#exams -->
+
+    <!-- HOMEWORK -->
+    <div class="section" id="hw">
+      <div class="section-title">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Homework
+      </div>
+      <table class="files-table">
+        <thead><tr><th>Homework</th><th style="width:210px;">Files</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="item-name">HW 1</div></td>
+            <td><a href="files/hw1.pdf" class="btn-file">Problem</a><a href="files/hw1_sol.pdf" class="btn-file sol">Solution</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">HW 2</div></td>
+            <td><a href="files/hw2.pdf" class="btn-file">Problem</a><a href="files/hw2_sol.pdf" class="btn-file sol">Solution</a></td>
+          </tr>
+          <tr>
+            <td><div class="item-name">HW 3</div></td>
+            <td><a href="files/hw3.pdf" class="btn-file">Problem</a><a href="files/hw3_sol.pdf" class="btn-file sol">Solution</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div><!-- /#hw -->
+
+    <!-- FINAL PROJECT -->
+    <div class="section" id="project">
+      <div class="section-title">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Final Project
+      </div>
+      <p style="font-size:14.5px;">The final project constitutes <strong>20% of the course grade</strong> (50% of the final exam component). Students apply statistical learning methods to a real dataset of their choice, producing a written report and an in-class presentation.</p>
+
+      <h3 style="margin:22px 0 10px; font-size:14.5px; font-weight:700; color:var(--primary);">Deliverables</h3>
+      <ul style="padding-left:20px; line-height:2.1; font-size:14.5px;">
+        <li><strong>Written Report</strong> — Introduce the dataset, describe the methods applied, and interpret the results.</li>
+        <li><strong>In-class Presentation</strong> — Present findings to the class (Jun 10 &amp; make-up Jun 12).</li>
+        <li><strong>R Code</strong> — Submit well-commented, reproducible R scripts.</li>
+      </ul>
+
+      <h3 style="margin:22px 0 10px; font-size:14.5px; font-weight:700; color:var(--primary);">Guidelines</h3>
+      <p style="font-size:14px; color:var(--text-light);">Project guidelines and submission details will be distributed in class. Please contact the instructor if you have questions about dataset selection.</p>
+    </div><!-- /#project -->
+
+  </div><!-- /.main-col -->
+
+  <!-- SIDEBAR -->
+  <div class="side-col">
+
+    <div class="instructor-card">
+      <img src="../photo.jpg" alt="Yonghyun Kwon" class="instructor-avatar" onerror="this.style.display='none'">
+      <div class="instructor-info">
+        <div class="name">Yonghyun Kwon (권용현)</div>
+        <div class="role">Assistant Professor, Statistics<br>Korea Military Academy</div>
+        <div class="email"><a href="mailto:yhkwon@kma.ac.kr">yhkwon@kma.ac.kr</a></div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h3>Course Info</h3>
+      <div class="info-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <div><span class="info-label">Semester</span>Spring 2026</div>
+      </div>
+      <div class="info-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+        <div><span class="info-label">Section</span>A1 &middot; 4th Year, Required</div>
+      </div>
+      <div class="info-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div><span class="info-label">Meetings</span>Mon &amp; Wed, 75 min</div>
+      </div>
+      <div class="info-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <div><span class="info-label">Room</span>Chungmu Hall Rm. 327</div>
+      </div>
+      <div class="info-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+        <div><span class="info-label">Credits</span>3 / 3</div>
+      </div>
+      <div class="info-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <div><span class="info-label">Language</span>English</div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h3>Grading</h3>
+      <div class="grading-row"><span>Quizzes (×4)</span><strong>30%</strong></div>
+      <div class="grading-bar"><div class="grading-bar-fill" style="width:30%"></div></div>
+      <p style="font-size:11.5px; color:var(--text-light); margin: 4px 0 10px;">Quiz 1–2: Closed book &nbsp;&middot;&nbsp; Quiz 3–4: Open book, closed web</p>
+      <div class="grading-row"><span>Midterm Exam</span><strong>30%</strong></div>
+      <div class="grading-bar" style="margin-bottom:4px;"><div class="grading-bar-fill" style="width:30%"></div></div>
+      <p style="font-size:11.5px; color:var(--text-light); margin: 0 0 10px;">Written exam (100%) &nbsp;&middot;&nbsp; Closed book</p>
+      <div class="grading-row"><span>Final Exam &amp; Project</span><strong>40%</strong></div>
+      <div class="grading-bar"><div class="grading-bar-fill" style="width:40%"></div></div>
+      <p style="font-size:11.5px; color:var(--text-light); margin: 4px 0 0;">Written (50%) &nbsp;&middot;&nbsp; Final Project (50%)</p>
+    </div>
+
+    <div class="info-card" id="resources">
+      <h3>Resources</h3>
+      <ul class="resource-list">
+        <li>📄 <a href="syllabus.pdf">Syllabus</a></li>
+        <li>📅 <a href="schedule.pdf">Course Schedule</a></li>
+        <li>📖 <a href="https://www.statlearning.com/" target="_blank">ISLR — Free PDF (Springer)</a></li>
+        <li>📖 <a href="https://www.r-project.org/" target="_blank">R Project</a> &nbsp;&middot;&nbsp; <a href="https://posit.co/download/rstudio-desktop/" target="_blank">RStudio</a></li>
+        <li>🔗 <a href="https://yonghyun-k.github.io/teaching.html" target="_blank">Instructor's Teaching Page</a></li>
+      </ul>
+    </div>
+
+  </div><!-- /.side-col -->
+
+</div><!-- /.page-body -->
+
+<footer class="course-footer">
+  Statistical Methods · Korea Military Academy · Spring 2026 &nbsp;|&nbsp;
+  <a href="https://yonghyun-k.github.io">Yonghyun Kwon</a>
+</footer>
+
+<script>
+  const sections = document.querySelectorAll('.section[id]');
+  const navLinks = document.querySelectorAll('.course-nav a');
+  sections.forEach(s =>
+    new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting)
+          navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' }).observe(s)
+  );
+</script>
+
+</body>
+</html>
