@@ -114,8 +114,9 @@ img { max-width: 100%; height: auto; }
 .section p { margin-bottom: 12px; }
 
 /* ===== COLLAPSIBLE SECTION (details/summary) ===== */
-details.section-collapsible > summary { list-style: none; cursor: pointer; }
+details.section-collapsible > summary { display: block; list-style: none; cursor: pointer; }
 details.section-collapsible > summary::-webkit-details-marker { display: none; }
+details.section-collapsible > summary::marker { content: ""; }
 details.section-collapsible > summary h2 { display: flex; align-items: center; margin-bottom: 0; }
 details.section-collapsible[open] > summary h2 { margin-bottom: 16px; }
 details.section-collapsible > summary h2::after {
