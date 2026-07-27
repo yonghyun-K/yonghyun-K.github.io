@@ -280,7 +280,21 @@ img { max-width: 100%; height: auto; }
 .news-tag.paper { background: #e8f8e8; color: #27ae60; }
 .news-tag.award { background: #fef5e7; color: #e67e22; }
 .news-tag.course { background: #fde8f0; color: #c0392b; }
-.news-tag.grant { background: #ede7f6; color: #7e57c2; }
+.news-tag.grant {
+  background: linear-gradient(135deg, #7e57c2, #5e35b1); color: #fff;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  box-shadow: 0 1px 3px rgba(94, 53, 177, 0.28);
+}
+
+/* Featured highlight (e.g. flagship grant) */
+.news-item.featured {
+  background: linear-gradient(135deg, #f7f3fd 0%, #efe9f9 100%);
+  border-left: 3px solid #7e57c2; border-bottom: none;
+  border-radius: 8px; padding: 18px 20px; margin: 6px 0;
+  box-shadow: 0 2px 12px rgba(94, 53, 177, 0.09);
+}
+.news-item.featured .news-date { color: #6a3fb0; }
+.news-item.featured .news-title { color: #4527a0; }
 
 /* ===== HONORS ===== */
 .honors-list { list-style: none; }
