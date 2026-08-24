@@ -39,9 +39,12 @@
 
     /* TAB PANELS — with JS on, only the selected section is shown.
        Without JS the body class is never added and every section stays visible. */
-    .js-tabs .main-col > .section { display: none; }
+    .js-tabs .main-col > .section { display: none; margin-bottom: 0; }
     .js-tabs .main-col > .section.is-active { display: block; }
-    .js-tabs .main-col > .section { margin-bottom: 0; }
+    /* Only the panel that asks for the sidebar (Overview) gets it; every
+       other tab drops to a single full-width column. */
+    .js-tabs .page-body.side-hidden { grid-template-columns: 1fr; gap: 0; }
+    .js-tabs .page-body.side-hidden .side-col { display: none; }
 
     /* LAYOUT */
     .page-body { max-width: 960px; margin: 0 auto; padding: 0 32px 80px; display: grid; grid-template-columns: 1fr 290px; gap: 48px; align-items: start; }
@@ -87,6 +90,8 @@
 
     /* ANNOUNCEMENTS */
     .ann-card { border: 1px solid var(--border); border-left: 4px solid var(--gold); border-radius: 8px; padding: 18px 22px; margin-bottom: 16px; background: var(--bg); }
+    .sub-title { font-family: 'EB Garamond', Georgia, serif; font-size: 23px; font-weight: 600; color: var(--primary); padding-bottom: 9px; border-bottom: 2px solid var(--border); margin: 40px 0 20px; display: flex; align-items: center; gap: 9px; }
+    .sub-title svg { color: var(--accent); flex-shrink: 0; }
     .ann-card:last-child { margin-bottom: 0; }
     .ann-card.pinned { background: var(--gold-light); }
     .ann-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-bottom: 10px; }
@@ -151,11 +156,11 @@
 
 <nav class="course-nav">
   <div class="course-nav-inner">
-    <a href="#announcements" class="active">Announcements</a>
-    <a href="#overview">Overview</a>
+    <a href="#overview" class="active">Overview</a>
     <a href="#schedule">Schedule</a>
     <a href="#notes">Lecture Notes</a>
     <a href="#exams">Quiz &amp; Exam</a>
+    <a href="#past">Past Exams</a>
     <a href="#hw">Homework</a>
   </div>
 </nav>
@@ -163,8 +168,8 @@
 <div class="page-body">
   <div class="main-col">
 
-    <!-- ANNOUNCEMENTS -->
-    <div class="section is-active" id="announcements">
+    <!-- OVERVIEW (announcements ride at the top of this panel) -->
+    <div class="section is-active" id="overview" data-sidebar>
       <div class="section-title">
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M17 8a5 5 0 0 1 0 8"/><path d="M20 5a9 9 0 0 1 0 14"/></svg>
         Announcements
@@ -177,17 +182,14 @@
           <span class="ann-date">March 2, 2026</span>
         </div>
         <div class="ann-body">
-          <p>Welcome to the class: Introduction to Statistics!</p>
+          <p>Welcome to the class: Introduction to Statistics for Artificial Intelligence!</p>
           <p>Check out the <a href="/stat101/syllabus_stat101.pdf" target="_blank" rel="noopener noreferrer">syllabus</a> and <a href="/stat101/schedule_stat101.pdf" target="_blank" rel="noopener noreferrer">course schedule</a> for some basic information about this class.</p>
           <p>If you have any questions, feel free to email me (<a href="mailto:yhkwon@kma.ac.kr">yhkwon@kma.ac.kr</a>) or reach out via Kakaotalk. I look forward to working with you.</p>
           <p class="ann-sign">Best wishes,<br>Yonghyun</p>
         </div>
       </div>
-    </div><!-- /#announcements -->
 
-    <!-- OVERVIEW -->
-    <div class="section" id="overview">
-      <div class="section-title">
+      <div class="sub-title">
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         Course Overview
       </div>
@@ -311,7 +313,7 @@
       </div>
 
       <p style="font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--text-light); margin-bottom:12px;">2026 Spring</p>
-      <table class="files-table" style="margin-bottom:28px;">
+      <table class="files-table">
         <thead><tr><th>Item</th><th>Date</th><th>Format</th><th style="width:210px;">Files</th></tr></thead>
         <tbody>
           <tr>
@@ -352,8 +354,16 @@
           </tr>
         </tbody>
       </table>
+    </div><!-- /#exams -->
 
-      <p style="font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--text-light); margin-bottom:12px;">Past Exams — 2025 Spring</p>
+    <!-- PAST EXAMS -->
+    <div class="section" id="past">
+      <div class="section-title">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><polyline points="12 7 12 12 15 14"/></svg>
+        Past Exams
+      </div>
+
+      <p style="font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--text-light); margin-bottom:12px;">2025 Spring</p>
       <table class="files-table" style="margin-bottom:28px;">
         <thead><tr><th>Item</th><th style="width:220px;">Files</th></tr></thead>
         <tbody>
@@ -384,7 +394,7 @@
         </tbody>
       </table>
 
-      <p style="font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--text-light); margin-bottom:12px;">Past Exams — 2025 Fall</p>
+      <p style="font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--text-light); margin-bottom:12px;">2025 Fall</p>
       <table class="files-table">
         <thead><tr><th>Item</th><th style="width:220px;">Files</th></tr></thead>
         <tbody>
@@ -414,7 +424,7 @@
           </tr>
         </tbody>
       </table>
-    </div><!-- /#exams -->
+    </div><!-- /#past -->
 
     <!-- HOMEWORK -->
     <div class="section" id="hw">
@@ -497,6 +507,7 @@
     var body     = document.body;
     var navLinks = Array.prototype.slice.call(document.querySelectorAll('.course-nav a'));
     var panels   = Array.prototype.slice.call(document.querySelectorAll('.main-col > .section[id]'));
+    var pageBody = document.querySelector('.page-body');
     if (!navLinks.length || !panels.length) return;
 
     body.classList.add('js-tabs');
@@ -506,6 +517,8 @@
       if (!match) id = panels[0].id;
       panels.forEach(function (p) { p.classList.toggle('is-active', p.id === id); });
       navLinks.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + id); });
+      var wantsSidebar = panels.some(function (p) { return p.id === id && p.hasAttribute('data-sidebar'); });
+      if (pageBody) pageBody.classList.toggle('side-hidden', !wantsSidebar);
       if (push && window.history && history.replaceState) {
         history.replaceState(null, '', '#' + id);
       }
