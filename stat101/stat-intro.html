@@ -15,7 +15,6 @@
       --border: #e0e0e0; --gold: #c9a227; --gold-light: #fdf6e3;
       --green: #27ae60; --red: #c0392b;
     }
-    html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; font-size: 15px; }
     a { color: var(--accent); text-decoration: none; transition: color .2s; }
     a:hover { color: var(--accent-dark); text-decoration: underline; }
@@ -34,9 +33,15 @@
     .course-nav { background: #fff; border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
     .course-nav-inner { max-width: 960px; margin: 0 auto; padding: 0 32px; display: flex; overflow-x: auto; scrollbar-width: none; }
     .course-nav-inner::-webkit-scrollbar { display: none; }
-    .course-nav a { display: block; padding: 13px 15px; font-size: 13.5px; font-weight: 600; color: var(--text-light); white-space: nowrap; border-bottom: 3px solid transparent; transition: color .2s, border-color .2s; text-decoration: none; }
-    .course-nav a:hover { color: var(--primary); border-color: var(--accent); }
+    .course-nav a { display: block; padding: 13px 15px; font-size: 13.5px; font-weight: 600; color: var(--text-light); white-space: nowrap; border-bottom: 3px solid transparent; transition: color .2s, border-color .2s; text-decoration: none; cursor: pointer; }
+    .course-nav a:hover { color: var(--primary); border-color: var(--accent); text-decoration: none; }
     .course-nav a.active { color: var(--primary); border-color: var(--accent); }
+
+    /* TAB PANELS — with JS on, only the selected section is shown.
+       Without JS the body class is never added and every section stays visible. */
+    .js-tabs .main-col > .section { display: none; }
+    .js-tabs .main-col > .section.is-active { display: block; }
+    .js-tabs .main-col > .section { margin-bottom: 0; }
 
     /* LAYOUT */
     .page-body { max-width: 960px; margin: 0 auto; padding: 0 32px 80px; display: grid; grid-template-columns: 1fr 290px; gap: 48px; align-items: start; }
@@ -79,6 +84,18 @@
     .btn-file.sol:hover { background: var(--green); color: #fff; }
     .btn-file.ann { border-color: #9b59b6; color: #9b59b6; }
     .btn-file.ann:hover { background: #9b59b6; color: #fff; }
+
+    /* ANNOUNCEMENTS */
+    .ann-card { border: 1px solid var(--border); border-left: 4px solid var(--gold); border-radius: 8px; padding: 18px 22px; margin-bottom: 16px; background: var(--bg); }
+    .ann-card:last-child { margin-bottom: 0; }
+    .ann-card.pinned { background: var(--gold-light); }
+    .ann-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+    .ann-title { font-family: 'EB Garamond', Georgia, serif; font-size: 18.5px; font-weight: 600; color: var(--primary); }
+    .ann-date { font-size: 12px; color: var(--text-light); }
+    .ann-pin { font-size: 10.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #8a6d0b; background: #fbeeba; border-radius: 4px; padding: 1px 7px; }
+    .ann-body p { font-size: 14.5px; margin-bottom: 12px; }
+    .ann-body p:last-child { margin-bottom: 0; }
+    .ann-sign { font-size: 14.5px; color: var(--text-light); }
 
     /* SIDEBAR */
     .info-card { background: var(--bg-light); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
@@ -134,17 +151,39 @@
 
 <nav class="course-nav">
   <div class="course-nav-inner">
-    <a href="#overview" class="active">Overview</a>
+    <a href="#announcements" class="active">Announcements</a>
+    <a href="#overview">Overview</a>
     <a href="#schedule">Schedule</a>
     <a href="#notes">Lecture Notes</a>
     <a href="#exams">Quiz &amp; Exam</a>
     <a href="#hw">Homework</a>
-    <a href="#resources">Resources</a>
   </div>
 </nav>
 
 <div class="page-body">
   <div class="main-col">
+
+    <!-- ANNOUNCEMENTS -->
+    <div class="section is-active" id="announcements">
+      <div class="section-title">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M17 8a5 5 0 0 1 0 8"/><path d="M20 5a9 9 0 0 1 0 14"/></svg>
+        Announcements
+      </div>
+
+      <div class="ann-card pinned">
+        <div class="ann-head">
+          <span class="ann-title">Welcome Greetings</span>
+          <span class="ann-pin">Pinned</span>
+          <span class="ann-date">March 2, 2026</span>
+        </div>
+        <div class="ann-body">
+          <p>Welcome to the class: Introduction to Statistics!</p>
+          <p>Check out the <a href="/stat101/syllabus_stat101.pdf" target="_blank" rel="noopener noreferrer">syllabus</a> and <a href="/stat101/schedule_stat101.pdf" target="_blank" rel="noopener noreferrer">course schedule</a> for some basic information about this class.</p>
+          <p>If you have any questions, feel free to email me (<a href="mailto:yhkwon@kma.ac.kr">yhkwon@kma.ac.kr</a>) or reach out via Kakaotalk. I look forward to working with you.</p>
+          <p class="ann-sign">Best wishes,<br>Yonghyun</p>
+        </div>
+      </div>
+    </div><!-- /#announcements -->
 
     <!-- OVERVIEW -->
     <div class="section" id="overview">
@@ -406,11 +445,11 @@
   <!-- SIDEBAR -->
   <div class="side-col">
     <div class="instructor-card">
-      <img src="photo.jpg" alt="Yonghyun Kwon" class="instructor-avatar" onerror="this.style.display='none'">
+      <img src="/photo.jpg" alt="Yonghyun Kwon" class="instructor-avatar" onerror="this.style.display='none'">
       <div class="instructor-info">
         <div class="name">Yonghyun Kwon (권용현)</div>
         <div class="role">Assistant Professor, Statistics<br>Korea Military Academy</div>
-        <div class="email"><a href="/cdn-cgi/l/email-protection#89f0e1e2fee6e7c9e2e4e8a7e8eaa7e2fb" target="_blank" rel="noopener noreferrer"><span class="__cf_email__" data-cfemail="9de4f5f6eaf2f3ddf6f0fcb3fcfeb3f6ef">[email&#160;protected]</span></a></div>
+        <div class="email"><a href="mailto:yhkwon@kma.ac.kr">yhkwon@kma.ac.kr</a></div>
       </div>
     </div>
 
@@ -453,19 +492,39 @@
   <a href="https://yonghyun-k.github.io" target="_blank" rel="noopener noreferrer">Yonghyun Kwon</a>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  const sections = document.querySelectorAll('.section[id]');
-  const navLinks = document.querySelectorAll('.course-nav a');
-  sections.forEach(s =>
-    new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const id = e.target.id;
-          navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
-        }
+<script>
+  (function () {
+    var body     = document.body;
+    var navLinks = Array.prototype.slice.call(document.querySelectorAll('.course-nav a'));
+    var panels   = Array.prototype.slice.call(document.querySelectorAll('.main-col > .section[id]'));
+    if (!navLinks.length || !panels.length) return;
+
+    body.classList.add('js-tabs');
+
+    function show(id, push) {
+      var match = panels.some(function (p) { return p.id === id; });
+      if (!match) id = panels[0].id;
+      panels.forEach(function (p) { p.classList.toggle('is-active', p.id === id); });
+      navLinks.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + id); });
+      if (push && window.history && history.replaceState) {
+        history.replaceState(null, '', '#' + id);
+      }
+    }
+
+    navLinks.forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        show(a.getAttribute('href').slice(1), true);
+        window.scrollTo(0, 0);
       });
-    }, { rootMargin: '-20% 0px -70% 0px' }).observe(s)
-  );
+    });
+
+    window.addEventListener('hashchange', function () {
+      show(location.hash.slice(1), false);
+    });
+
+    show(location.hash.slice(1), false);
+  })();
 </script>
 </body>
 </html>
