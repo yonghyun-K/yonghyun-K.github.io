@@ -109,6 +109,18 @@
     .ann-label { font-weight: 700; color: var(--primary); }
     .ann-sign { font-size: 14.5px; color: var(--text-light); }
 
+    /* One announcement per page. Without JS the body class is never added
+       and every announcement stays visible, pager hidden. */
+    .js-tabs .ann-list > .ann-card { display: none; }
+    .js-tabs .ann-list > .ann-card.is-active { display: block; }
+    .ann-pager { display: none; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+    .js-tabs .ann-pager.is-on { display: flex; }
+    .ann-pager button { font-family: inherit; font-size: 13px; font-weight: 600; color: var(--text-light); background: var(--bg); border: 1px solid var(--border); border-radius: 5px; padding: 5px 11px; cursor: pointer; transition: color .2s, border-color .2s, background .2s; }
+    .ann-pager button:hover:not(:disabled) { color: var(--primary); border-color: var(--accent); }
+    .ann-pager button[aria-current="true"] { color: #fff; background: var(--primary); border-color: var(--primary); cursor: default; }
+    .ann-pager button:disabled { opacity: .4; cursor: default; }
+    .ann-pager .ann-gap { font-size: 13px; color: var(--text-light); padding: 0 2px; }
+
     /* SIDEBAR */
     .info-card { background: var(--bg-light); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
     .info-card h3 { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-light); margin-bottom: 13px; }
@@ -181,20 +193,7 @@
         Announcements
       </div>
 
-      <div class="ann-card pinned">
-        <div class="ann-head">
-          <span class="ann-title">Welcome Greetings</span>
-          <span class="ann-pin">Pinned</span>
-          <span class="ann-date">September 1, 2026</span>
-        </div>
-        <div class="ann-body">
-          <p>Welcome to the class: Introduction to Statistics for Artificial Intelligence!</p>
-          <p>Check out the <a href="/stat101/syllabus_stat101.pdf" target="_blank" rel="noopener noreferrer">syllabus</a> and <a href="/stat101/schedule_stat101.pdf" target="_blank" rel="noopener noreferrer">course schedule</a> for some basic information about this class.</p>
-          <p>If you have any questions, feel free to email me (<a href="mailto:yhkwon@kma.ac.kr">yhkwon@kma.ac.kr</a>) or reach out via Kakaotalk. I look forward to working with you.</p>
-          <p class="ann-sign">Best wishes,<br>Yonghyun</p>
-        </div>
-      </div>
-
+      <div class="ann-list" id="ann-list">
       <div class="ann-card">
         <div class="ann-head">
           <span class="ann-title">Announcement on Quiz 1</span>
@@ -218,6 +217,22 @@
           </ul>
         </div>
       </div>
+
+      <div class="ann-card">
+        <div class="ann-head">
+          <span class="ann-title">Welcome Greetings</span>
+          <span class="ann-date">September 1, 2026</span>
+        </div>
+        <div class="ann-body">
+          <p>Welcome to the class: Introduction to Statistics for Artificial Intelligence!</p>
+          <p>Check out the <a href="/stat101/syllabus_stat101.pdf" target="_blank" rel="noopener noreferrer">syllabus</a> and <a href="/stat101/schedule_stat101.pdf" target="_blank" rel="noopener noreferrer">course schedule</a> for some basic information about this class.</p>
+          <p>If you have any questions, feel free to email me (<a href="mailto:yhkwon@kma.ac.kr">yhkwon@kma.ac.kr</a>) or reach out via Kakaotalk. I look forward to working with you.</p>
+          <p class="ann-sign">Best wishes,<br>Yonghyun</p>
+        </div>
+      </div>
+
+      </div><!-- /.ann-list -->
+      <nav class="ann-pager" id="ann-pager" aria-label="Announcement pages"></nav>
 
       <div class="sub-title">
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -604,6 +619,64 @@
     });
 
     show(location.hash.slice(1), false);
+  })();
+
+  /* Announcements: one per page, newest first. Add a new .ann-card at the
+     top of #ann-list and the pager picks it up automatically. */
+  (function () {
+    var list = document.getElementById('ann-list');
+    var pager = document.getElementById('ann-pager');
+    if (!list || !pager) return;
+
+    var cards = Array.prototype.slice.call(list.querySelectorAll(':scope > .ann-card'));
+    if (cards.length < 2) return;
+
+    var page = 0;
+    var WINDOW = 2; /* numbered pages shown either side of the current one */
+
+    function button(label, target, opts) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      if (opts && opts.disabled) b.disabled = true;
+      if (opts && opts.current) b.setAttribute('aria-current', 'true');
+      if (opts && opts.label) b.setAttribute('aria-label', opts.label);
+      b.addEventListener('click', function () { go(target); });
+      pager.appendChild(b);
+    }
+
+    function gap() {
+      var s = document.createElement('span');
+      s.className = 'ann-gap';
+      s.textContent = '\u2026';
+      pager.appendChild(s);
+    }
+
+    function render() {
+      cards.forEach(function (c, i) { c.classList.toggle('is-active', i === page); });
+
+      pager.innerHTML = '';
+      button('\u2039 Prev', page - 1, { disabled: page === 0, label: 'Previous announcement' });
+
+      var last = cards.length - 1;
+      var from = Math.max(0, Math.min(page - WINDOW, last - WINDOW * 2));
+      var to   = Math.min(last, Math.max(page + WINDOW, WINDOW * 2));
+      if (from > 0) { button('1', 0, {}); if (from > 1) gap(); }
+      for (var i = from; i <= to; i++) button(String(i + 1), i, { current: i === page });
+      if (to < last) { if (to < last - 1) gap(); button(String(last + 1), last, {}); }
+
+      button('Next \u203a', page + 1, { disabled: page === last, label: 'Next announcement' });
+      pager.classList.add('is-on');
+    }
+
+    function go(i) {
+      if (i < 0 || i > cards.length - 1 || i === page) return;
+      page = i;
+      render();
+      list.scrollIntoView({ block: 'nearest' });
+    }
+
+    render();
   })();
 </script>
 </body>
