@@ -102,7 +102,24 @@
     .ann-pin { font-size: 10.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #8a6d0b; background: #fbeeba; border-radius: 4px; padding: 1px 7px; }
     .ann-body p { font-size: 14.5px; margin-bottom: 12px; }
     .ann-body p:last-child { margin-bottom: 0; }
+    .ann-body ul { font-size: 14.5px; padding-left: 20px; margin-bottom: 12px; }
+    .ann-body ul:last-child { margin-bottom: 0; }
+    .ann-body li { margin-bottom: 4px; }
+    .ann-body li:last-child { margin-bottom: 0; }
+    .ann-label { font-weight: 700; color: var(--primary); }
     .ann-sign { font-size: 14.5px; color: var(--text-light); }
+
+    /* One announcement per page. Without JS the body class is never added
+       and every announcement stays visible, pager hidden. */
+    .js-tabs .ann-list > .ann-card { display: none; }
+    .js-tabs .ann-list > .ann-card.is-active { display: block; }
+    .ann-pager { display: none; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+    .js-tabs .ann-pager.is-on { display: flex; }
+    .ann-pager button { font-family: inherit; font-size: 13px; font-weight: 600; color: var(--text-light); background: var(--bg); border: 1px solid var(--border); border-radius: 5px; padding: 5px 11px; cursor: pointer; transition: color .2s, border-color .2s, background .2s; }
+    .ann-pager button:hover:not(:disabled) { color: var(--primary); border-color: var(--accent); }
+    .ann-pager button[aria-current="true"] { color: #fff; background: var(--primary); border-color: var(--primary); cursor: default; }
+    .ann-pager button:disabled { opacity: .4; cursor: default; }
+    .ann-pager .ann-gap { font-size: 13px; color: var(--text-light); padding: 0 2px; }
 
     /* SIDEBAR */
     .info-card { background: var(--bg-light); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
@@ -176,10 +193,34 @@
         Announcements
       </div>
 
-      <div class="ann-card pinned">
+      <div class="ann-list" id="ann-list">
+      <div class="ann-card">
+        <div class="ann-head">
+          <span class="ann-title">Announcement on Quiz 1</span>
+          <span class="ann-date">September 8, 2026</span>
+        </div>
+        <div class="ann-body">
+          <p><span class="ann-label">Exam Date and Time:</span> September 17 (Thursday) / 60 minutes.</p>
+          <p><span class="ann-label">Exam Format:</span> Written Exam (Closed Book).</p>
+          <p><span class="ann-label">Required Materials:</span> Writing materials and calculator.</p>
+          <p><span class="ann-label">Exam Coverage:</span></p>
+          <ul>
+            <li>Chapter 2: Summarizing data</li>
+            <li>Chapter 3: Probability</li>
+            <li>Chapter 4: Random Variables</li>
+          </ul>
+          <p><span class="ann-label">Exam Guidelines:</span></p>
+          <ul>
+            <li>Calculations and solution steps necessary to derive the answer must be included. Writing only the final answer will result in partial credit.</li>
+            <li>No discussions are allowed during the exam.</li>
+            <li>Any form of academic dishonesty or cheating will be addressed according to the Cadet Life Regulations(생도생활예규).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ann-card">
         <div class="ann-head">
           <span class="ann-title">Welcome Greetings</span>
-          <span class="ann-pin">Pinned</span>
           <span class="ann-date">September 1, 2026</span>
         </div>
         <div class="ann-body">
@@ -189,6 +230,9 @@
           <p class="ann-sign">Best wishes,<br>Yonghyun</p>
         </div>
       </div>
+
+      </div><!-- /.ann-list -->
+      <nav class="ann-pager" id="ann-pager" aria-label="Announcement pages"></nav>
 
       <div class="sub-title">
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -473,17 +517,17 @@
       <table class="files-table">
         <thead><tr><th style="width:90px;">Homework</th><th>Coverage</th><th style="width:190px;">Files</th></tr></thead>
         <tbody>
-          <tr><td><div class="item-name">HW 1</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 2 — Summarizing data (box plots, IQR)</td><td><a href="/stat101/files/26-1/hw1.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/26-1/hw1_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
-          <tr><td><div class="item-name">HW 2</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 3–4 — Probability models, expectation and variance</td><td><a href="/stat101/files/26-1/hw2.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/26-1/hw2_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
-          <tr><td><div class="item-name">HW 3</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 5 — Normal distribution</td><td><a href="/stat101/files/26-1/hw3.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/26-1/hw3_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
-          <tr><td><div class="item-name">HW 4</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 5–6 — Uniform distribution, Central Limit Theorem</td><td><a href="/stat101/files/26-1/hw4.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/26-1/hw4_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
-          <tr><td><div class="item-name">HW 5</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 7 — Point estimation, unbiased estimators</td><td><a href="/stat101/files/26-1/hw5.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/26-1/hw5_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
-          <tr><td><div class="item-name">HW 6</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 8 — Confidence interval for a population mean</td><td><a href="/stat101/files/26-1/hw6.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/26-1/hw6_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
-          <tr><td><div class="item-name">HW 7</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 8 — One-sample means with the <em>t</em>-distribution</td><td><a href="/stat101/files/26-1/hw7.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/26-1/hw7_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
-          <tr><td><div class="item-name">HW 8</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 8 — Hypothesis test for a population mean</td><td><a href="/stat101/files/26-1/hw8.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/26-1/hw8_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
-          <tr><td><div class="item-name">HW 9</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 8 — Difference of two means</td><td><a href="/stat101/files/26-1/hw9.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/26-1/hw9_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
-          <tr><td><div class="item-name">HW 10</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 9 — Line fitting, residuals, and correlation</td><td><a href="/stat101/files/26-1/hw10.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/26-1/hw10_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
-          <tr><td><div class="item-name">HW 11</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 9 — Inference for linear regression</td><td><a href="/stat101/files/26-1/hw11.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/26-1/hw11_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
+          <tr><td><div class="item-name">HW 1</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 2 — Summarizing data (box plots, IQR)</td><td><a href="/stat101/files/homework/hw1.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/homework/hw1_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
+          <tr><td><div class="item-name">HW 2</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 3–4 — Probability models, expectation and variance</td><td><a href="/stat101/files/homework/hw2.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/homework/hw2_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
+          <tr><td><div class="item-name">HW 3</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 5 — Normal distribution</td><td><a href="/stat101/files/homework/hw3.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/homework/hw3_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
+          <tr><td><div class="item-name">HW 4</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 5–6 — Uniform distribution, Central Limit Theorem</td><td><a href="/stat101/files/homework/hw4.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/homework/hw4_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
+          <tr><td><div class="item-name">HW 5</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 7 — Point estimation, unbiased estimators</td><td><a href="/stat101/files/homework/hw5.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/homework/hw5_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
+          <tr><td><div class="item-name">HW 6</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 8 — Confidence interval for a population mean</td><td><a href="/stat101/files/homework/hw6.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/homework/hw6_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
+          <tr><td><div class="item-name">HW 7</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 8 — One-sample means with the <em>t</em>-distribution</td><td><a href="/stat101/files/homework/hw7.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/homework/hw7_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
+          <tr><td><div class="item-name">HW 8</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 8 — Hypothesis test for a population mean</td><td><a href="/stat101/files/homework/hw8.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/homework/hw8_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
+          <tr><td><div class="item-name">HW 9</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 8 — Difference of two means</td><td><a href="/stat101/files/homework/hw9.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/homework/hw9_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
+          <tr><td><div class="item-name">HW 10</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 9 — Line fitting, residuals, and correlation</td><td><a href="/stat101/files/homework/hw10.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/homework/hw10_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
+          <tr><td><div class="item-name">HW 11</div></td><td style="font-size:13px;color:var(--text-light);">Ch. 9 — Inference for linear regression</td><td><a href="/stat101/files/homework/hw11.pdf" class="btn-file" target="_blank" rel="noopener noreferrer">Problem</a><a href="/stat101/files/homework/hw11_sol.pdf" class="btn-file sol" target="_blank" rel="noopener noreferrer">Solution</a></td></tr>
         </tbody>
       </table>
     </div><!-- /#hw -->
@@ -575,6 +619,64 @@
     });
 
     show(location.hash.slice(1), false);
+  })();
+
+  /* Announcements: one per page, newest first. Add a new .ann-card at the
+     top of #ann-list and the pager picks it up automatically. */
+  (function () {
+    var list = document.getElementById('ann-list');
+    var pager = document.getElementById('ann-pager');
+    if (!list || !pager) return;
+
+    var cards = Array.prototype.slice.call(list.querySelectorAll(':scope > .ann-card'));
+    if (cards.length < 2) return;
+
+    var page = 0;
+    var WINDOW = 2; /* numbered pages shown either side of the current one */
+
+    function button(label, target, opts) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      if (opts && opts.disabled) b.disabled = true;
+      if (opts && opts.current) b.setAttribute('aria-current', 'true');
+      if (opts && opts.label) b.setAttribute('aria-label', opts.label);
+      b.addEventListener('click', function () { go(target); });
+      pager.appendChild(b);
+    }
+
+    function gap() {
+      var s = document.createElement('span');
+      s.className = 'ann-gap';
+      s.textContent = '\u2026';
+      pager.appendChild(s);
+    }
+
+    function render() {
+      cards.forEach(function (c, i) { c.classList.toggle('is-active', i === page); });
+
+      pager.innerHTML = '';
+      button('\u2039 Prev', page - 1, { disabled: page === 0, label: 'Previous announcement' });
+
+      var last = cards.length - 1;
+      var from = Math.max(0, Math.min(page - WINDOW, last - WINDOW * 2));
+      var to   = Math.min(last, Math.max(page + WINDOW, WINDOW * 2));
+      if (from > 0) { button('1', 0, {}); if (from > 1) gap(); }
+      for (var i = from; i <= to; i++) button(String(i + 1), i, { current: i === page });
+      if (to < last) { if (to < last - 1) gap(); button(String(last + 1), last, {}); }
+
+      button('Next \u203a', page + 1, { disabled: page === last, label: 'Next announcement' });
+      pager.classList.add('is-on');
+    }
+
+    function go(i) {
+      if (i < 0 || i > cards.length - 1 || i === page) return;
+      page = i;
+      render();
+      list.scrollIntoView({ block: 'nearest' });
+    }
+
+    render();
   })();
 </script>
 </body>
