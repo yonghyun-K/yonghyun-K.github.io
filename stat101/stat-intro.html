@@ -109,8 +109,8 @@
     .ann-label { font-weight: 700; color: var(--primary); }
     .ann-sign { font-size: 14.5px; color: var(--text-light); }
 
-    /* One announcement per page, except that open (pinned) ones share the
-       first page. Without JS the body class is never added and every
+    /* One announcement per page, except that pinned ones (upcoming events)
+       share the first page. Without JS the body class is never added and every
        announcement stays visible, pager hidden. */
     .js-tabs .ann-list { display: flex; flex-direction: column; gap: 16px; }
     .js-tabs .ann-list > .ann-card { display: none; margin-bottom: 0; }
@@ -196,7 +196,7 @@
       </div>
 
       <div class="ann-list" id="ann-list">
-      <div class="ann-card" data-open-until="2026-10-23">
+      <div class="ann-card" data-event-date="2026-10-23">
         <div class="ann-head">
           <span class="ann-title">Announcement on Special Lecture</span>
           <span class="ann-date">October 14, 2026</span>
@@ -210,7 +210,7 @@
         </div>
       </div>
 
-      <div class="ann-card" data-open-until="2026-10-20">
+      <div class="ann-card" data-event-date="2026-10-20">
         <div class="ann-head">
           <span class="ann-title">Announcement on Quiz 2</span>
           <span class="ann-date">October 6, 2026</span>
@@ -235,7 +235,7 @@
         </div>
       </div>
 
-      <div class="ann-card">
+      <div class="ann-card" data-event-date="2026-09-17">
         <div class="ann-head">
           <span class="ann-title">Announcement on Quiz 1</span>
           <span class="ann-date">September 8, 2026</span>
@@ -663,10 +663,12 @@
     show(location.hash.slice(1), false);
   })();
 
-  /* Announcements: one per page, newest first. Add a new .ann-card at the
-     top of #ann-list and the pager picks it up automatically. A card with
-     data-open-until="YYYY-MM-DD" is pinned through the end of that day;
-     all pinned cards share the first page. */
+  /* Announcements, newest first. Add a new .ann-card at the top of
+     #ann-list and the pager picks it up automatically. By default, give
+     every announcement about an event (quiz, exam, lecture, ...) its date
+     as data-event-date="YYYY-MM-DD": until that day is over the card is
+     pinned, and all pinned cards are shown together on the first page.
+     Past events and cards without a date get one page each. */
   (function () {
     var list = document.getElementById('ann-list');
     var pager = document.getElementById('ann-pager');
@@ -677,8 +679,8 @@
     var now = new Date();
     var today = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2);
     var open = cards.filter(function (c) {
-      var until = c.getAttribute('data-open-until');
-      return until && today <= until;
+      var date = c.getAttribute('data-event-date');
+      return date && today <= date;
     });
     open.forEach(function (c) {
       c.classList.add('pinned');
