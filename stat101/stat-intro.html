@@ -109,9 +109,11 @@
     .ann-label { font-weight: 700; color: var(--primary); }
     .ann-sign { font-size: 14.5px; color: var(--text-light); }
 
-    /* One announcement per page. Without JS the body class is never added
-       and every announcement stays visible, pager hidden. */
-    .js-tabs .ann-list > .ann-card { display: none; }
+    /* One announcement per page, except that open (pinned) ones share the
+       first page. Without JS the body class is never added and every
+       announcement stays visible, pager hidden. */
+    .js-tabs .ann-list { display: flex; flex-direction: column; gap: 16px; }
+    .js-tabs .ann-list > .ann-card { display: none; margin-bottom: 0; }
     .js-tabs .ann-list > .ann-card.is-active { display: block; }
     .ann-pager { display: none; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
     .js-tabs .ann-pager.is-on { display: flex; }
@@ -194,7 +196,21 @@
       </div>
 
       <div class="ann-list" id="ann-list">
-      <div class="ann-card">
+      <div class="ann-card" data-open-until="2026-10-23">
+        <div class="ann-head">
+          <span class="ann-title">Announcement on Special Lecture</span>
+          <span class="ann-date">October 14, 2026</span>
+        </div>
+        <div class="ann-body">
+          <p><span class="ann-label">Date and Time:</span> October 23 (Friday) / 10:00–11:15.</p>
+          <p><span class="ann-label">Location:</span> Seminar Room, B1, Chungmu Hall (충무관 지하1층 세미나실).</p>
+          <p><span class="ann-label">Speaker:</span> Prof. Woncheol Jang, Department of Statistics, Seoul National University.</p>
+          <p><span class="ann-label">Topic:</span> Data Literacy: Insights Beyond Numbers and Reading Society (데이터 문해력: 숫자 너머의 통찰과 사회 읽기).</p>
+          <p>Attendance will be checked. Unless you have a valid reason, you must attend. In exchange, there will be no class on November 17 (Tuesday).</p>
+        </div>
+      </div>
+
+      <div class="ann-card" data-open-until="2026-10-20">
         <div class="ann-head">
           <span class="ann-title">Announcement on Quiz 2</span>
           <span class="ann-date">October 6, 2026</span>
@@ -306,9 +322,10 @@
           <tr class="holiday"><td class="wk">7</td><td class="date-col">Oct 15 (Thu)</td><td><div class="topic-main">Hwarang Festival</div></td><td><span class="badge badge-holiday">No Class</span></td></tr>
           <tr><td class="wk">8</td><td class="date-col">Oct 20 (Tue)</td><td><div class="topic-main">Quiz 2</div></td><td><span class="badge badge-quiz">Quiz 2</span></td></tr>
           <tr><td class="wk">8</td><td class="date-col">Oct 22 (Thu)</td><td><div class="topic-main">Summary &amp; Review</div></td><td></td></tr>
+          <tr><td class="wk">8</td><td class="date-col">Oct 23 (Fri)</td><td><div class="topic-main">Special Lecture — Data Literacy: Insights Beyond Numbers and Reading Society</div><div class="topic-sub">Prof. Woncheol Jang (Seoul National University) · 10:00–11:15 · Seminar Room, B1, Chungmu Hall</div></td><td></td></tr>
           <tr><td class="wk">9</td><td class="date-col">Oct 27–29</td><td><div class="topic-main">Midterm Exam</div><div class="topic-sub">Coverage: Ch. 1–7</div></td><td><span class="badge badge-exam">Midterm</span></td></tr>
           <tr class="holiday"><td class="wk">10–11</td><td class="date-col">Nov 3–12</td><td><div class="topic-main">Joint Training (합동교육)</div><div class="topic-sub">Four sessions: Nov 3, 5, 10, 12</div></td><td><span class="badge badge-holiday">No Class</span></td></tr>
-          <tr><td class="wk">12</td><td class="date-col">Nov 17 (Tue)</td><td><div class="topic-main">Special Lecture</div><div class="topic-sub"><em>Date TBD</em></div></td><td></td></tr>
+          <tr class="holiday"><td class="wk">12</td><td class="date-col">Nov 17 (Tue)</td><td><div class="topic-main">Replaced by Special Lecture (Oct 23)</div></td><td><span class="badge badge-holiday">No Class</span></td></tr>
           <tr><td class="wk">12</td><td class="date-col">Nov 19 (Thu)</td><td><div class="topic-main">Ch. 8 — Inference for Means</div><div class="topic-sub">One-sample means with the <em>t</em>-distribution (1)</div></td><td></td></tr>
           <tr><td class="wk">13</td><td class="date-col">Nov 24 (Tue)</td><td><div class="topic-main">Ch. 8 — Inference for Means (cont.)</div><div class="topic-sub">One-sample means with the <em>t</em>-distribution (2)</div></td><td></td></tr>
           <tr><td class="wk">13</td><td class="date-col">Nov 26 (Thu)</td><td><div class="topic-main">Ch. 8 — Inference for Means (cont.)</div><div class="topic-sub">Hypothesis test for population mean (1)</div></td><td></td></tr>
@@ -647,14 +664,33 @@
   })();
 
   /* Announcements: one per page, newest first. Add a new .ann-card at the
-     top of #ann-list and the pager picks it up automatically. */
+     top of #ann-list and the pager picks it up automatically. A card with
+     data-open-until="YYYY-MM-DD" is pinned through the end of that day;
+     all pinned cards share the first page. */
   (function () {
     var list = document.getElementById('ann-list');
     var pager = document.getElementById('ann-pager');
     if (!list || !pager) return;
 
     var cards = Array.prototype.slice.call(list.querySelectorAll(':scope > .ann-card'));
-    if (cards.length < 2) return;
+
+    var now = new Date();
+    var today = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2);
+    var open = cards.filter(function (c) {
+      var until = c.getAttribute('data-open-until');
+      return until && today <= until;
+    });
+    open.forEach(function (c) {
+      c.classList.add('pinned');
+      var pin = document.createElement('span');
+      pin.className = 'ann-pin';
+      pin.textContent = 'Pinned';
+      c.querySelector('.ann-head').appendChild(pin);
+    });
+
+    var pages = open.length ? [open] : [];
+    cards.forEach(function (c) { if (open.indexOf(c) < 0) pages.push([c]); });
+    if (!pages.length) return;
 
     var page = 0;
     var WINDOW = 2; /* numbered pages shown either side of the current one */
@@ -678,12 +714,15 @@
     }
 
     function render() {
-      cards.forEach(function (c, i) { c.classList.toggle('is-active', i === page); });
+      pages.forEach(function (p, i) {
+        p.forEach(function (c) { c.classList.toggle('is-active', i === page); });
+      });
+      if (pages.length < 2) return;
 
       pager.innerHTML = '';
       button('\u2039 Prev', page - 1, { disabled: page === 0, label: 'Previous announcement' });
 
-      var last = cards.length - 1;
+      var last = pages.length - 1;
       var from = Math.max(0, Math.min(page - WINDOW, last - WINDOW * 2));
       var to   = Math.min(last, Math.max(page + WINDOW, WINDOW * 2));
       if (from > 0) { button('1', 0, {}); if (from > 1) gap(); }
@@ -695,7 +734,7 @@
     }
 
     function go(i) {
-      if (i < 0 || i > cards.length - 1 || i === page) return;
+      if (i < 0 || i > pages.length - 1 || i === page) return;
       page = i;
       render();
       list.scrollIntoView({ block: 'nearest' });
