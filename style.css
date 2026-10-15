@@ -221,6 +221,17 @@ details.section-collapsible > summary:focus-visible { outline: 2px solid var(--a
   margin-right: 6px; margin-top: 4px; transition: all 0.2s;
 }
 .pub-item .pub-links a:hover { background: var(--accent); color: #fff; text-decoration: none; }
+.pub-more { border-top: 1px solid var(--bg-light); }
+.pub-more > summary {
+  display: inline-flex; align-items: center; gap: 6px; list-style: none; cursor: pointer;
+  margin-top: 12px; font-size: 14px; font-weight: 600; color: var(--accent);
+}
+.pub-more > summary::-webkit-details-marker { display: none; }
+.pub-more > summary::marker { content: ""; }
+.pub-more > summary::before { content: "\25B8"; font-size: 13px; transition: transform 0.2s ease; }
+.pub-more[open] > summary::before { transform: rotate(90deg); }
+.pub-more > summary:hover { color: var(--accent-dark); }
+.pub-more > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
 /* ===== RESEARCH CARDS ===== */
 .research-areas { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
